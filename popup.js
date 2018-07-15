@@ -2,10 +2,13 @@
 document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("mybutton").addEventListener("click",handler);
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
+    document.getElementById("flipButton").addEventListener("click",flipArt);
 });
 
 var parsedJson;
-var divel = document.getElementById('output');
+var divel = document.getElementById('cardPic');
+var cardFace1;
+var cardFace2;
 
 //handle player input
 function handler()
@@ -21,18 +24,18 @@ function handler()
     var cardName = parsedJson.name;
     if(parsedJson.layout == 'normal')
     {
+        document.getElementById("flipButton").style.visibility="hidden";
         var pictureURL = parsedJson.image_uris.normal
-        var pic = document.createElement("img");
-        pic.src = pictureURL;
-        pic.setAttribute("height", "350");
-        pic.setAttribute("width", "275");
-        divel.appendChild(pic)
-        document.getElementById('cardInfo').innerHTML = cardName;
+        document.getElementById("cardPic").src = pictureURL;
+        document.getElementById("cardInfo").innerHTML = cardName;
     }
     if(parsedJson.layout == 'transform')
     {
-        var cardFace1 = parsedJson.card_faces[0].image_uris.normal;
-        var cardFace2 = parsedJson.card_faces[1].image_uris.normal;
+        cardFace1 = parsedJson.card_faces[0].image_uris.normal;
+        cardFace2 = parsedJson.card_faces[1].image_uris.normal;
+        document.getElementById("cardPic").src = cardFace1;
+        document.getElementById("flipButton").style.visibility = "visible";
+
     }
 }
 
@@ -50,4 +53,17 @@ function MakeRequest(Url)
     xmlHttp.open( "GET", Url, false ); // false for synchronous request
     xmlHttp.send();
     return xmlHttp.responseText;
+}
+
+function flipArt(){
+    switch(document.getElementById("cardPic").src)
+    {
+        case cardFace1:
+            document.getElementById("cardPic").src = cardFace2;
+            return;
+        case cardFace2:
+            document.getElementById("cardPic").src = cardFace1;
+            return;
+    }
+
 }
