@@ -7,12 +7,6 @@
         text-align: center;
         display: table;
     }
-    h3{
-        position:absolute;
-        transition: .5s ease;
-        top: 8%;
-        right: 24%;
-    }
     img{
         background-color: lightgrey;
         position:absolute;
@@ -28,6 +22,16 @@
         top: 95.5%;
         left: 21%;
     }
+    div{
+        background-color: lightgray;
+        height: 375px;
+        width: 325px;
+        position:absolute;
+        transition: .5s ease;
+        top: 13%;
+        right: 4%;
+        text-align: center;
+    }
 
 </style>
 <head>
@@ -41,10 +45,10 @@
     <button id = "mybutton">Search for Card</button>
     <button id = "moreInfo">Click for more card info</button>
     <button id = "flipButton">Click to flip art</button>
+    <img id = "cardPic" style="width:300px;height:375px;"/>
     <div>
-        <img id = "cardPic" style="width:300px;height:375px;"/>
-    </div> 
-    <h3 id = cardInfo></h3>
+        <h3 id = cardInfo></h3>
+    </div>
 <script 
     src="popup.js">
 </script>
