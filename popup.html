@@ -2,8 +2,20 @@
 <html lang="en">
 <style>
     body{
-        height: 400px;
-        width: 400px;
+        height: 450px;
+        width: 600px;
+        text-align: center;
+        display: table;
+    }
+    div{
+        padding: 1em;
+        text-align:left;
+        height: 350px;
+        width:275px;
+        margin-top: 30px;
+    }
+    h3{
+        text-align: right;
     }
 
 </style>
@@ -14,9 +26,11 @@
     <title>Document</title>
 </head>
 <body>
-        Enter Player:  <input type="text" name="Player" id = "myEnter">
-        <button id = "mybutton">Try it</button>
-        <div id = "output"></div> 
+    Enter Card:  <input type="text" name="Card" id = "EnteredCard">
+    <button id = "mybutton">Search for Card</button>
+    <button id = "moreInfo">Click for more card info</button>
+    <div id = "output"></div> 
+    <h3 id = cardInfo></h3>
 <script 
     src="popup.js">
 </script>
