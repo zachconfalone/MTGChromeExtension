@@ -23,6 +23,10 @@ function handler()
     }
     var cardName = parsedJson.name;
     var oracle = parsedJson.oracle_text;
+    for(each in parsedJson.legalities)
+    {
+        document.getElementById('legalities').textContent += each + ":" +parsedJson.legalities[each] + ' ' ;
+    }
     if(parsedJson.layout == 'normal')
     {
         document.getElementById("flipButton").style.visibility="hidden";
