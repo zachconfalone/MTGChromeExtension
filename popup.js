@@ -22,12 +22,14 @@ function handler()
         alert('ALERT: Can not parse your request, please enter it again');
     }
     var cardName = parsedJson.name;
+    var oracle = parsedJson.oracle_text;
     if(parsedJson.layout == 'normal')
     {
         document.getElementById("flipButton").style.visibility="hidden";
         var pictureURL = parsedJson.image_uris.normal
         document.getElementById("cardPic").src = pictureURL;
-        document.getElementById("cardInfo").innerHTML = cardName;
+        document.getElementById("cardInfo").innerHTML = "Card Name: " + cardName;
+        document.getElementById("OracleText").innerHTML = "Oracle Text: " + oracle;
     }
     if(parsedJson.layout == 'transform')
     {
