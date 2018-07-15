@@ -13,6 +13,7 @@ var cardFace2;
 //handle player input
 function handler()
 {
+    document.getElementById('legalities').innerHTML = ' ';
     divel.innerHTML = '';
     var entCard = document.getElementById("EnteredCard").value;
     var returned = MakeRequest('https://api.scryfall.com/cards/named?fuzzy=' + entCard)
