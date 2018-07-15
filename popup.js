@@ -29,7 +29,6 @@ function handler()
         var pictureURL = parsedJson.image_uris.normal
         document.getElementById("cardPic").src = pictureURL;
         document.getElementById("cardInfo").innerHTML = "Card Name: " + cardName;
-        document.getElementById("OracleText").innerHTML = "Oracle Text: " + oracle;
     }
     if(parsedJson.layout == 'transform')
     {
@@ -67,5 +66,6 @@ function flipArt(){
             document.getElementById("cardPic").src = cardFace1;
             return;
     }
+
 
 }
