@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("mybutton").addEventListener("click",handler);
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
     document.getElementById("flipButton").addEventListener("click",flipArt);
-    document.getElementById("setPickerButton").addEventListener("click",selectArt);
+    document.getElementById("setSelector").addEventListener("change",selectArt);
 });
 
 var parsedJson;
