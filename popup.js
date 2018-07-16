@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("mybutton").addEventListener("click",handler);
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
     document.getElementById("flipButton").addEventListener("click",flipArt);
-    document.getElementById("setPicker").addEventListener("click",selectArt);
+    document.getElementById("setPickerButton").addEventListener("click",selectArt);
 });
 
 var parsedJson;
@@ -15,6 +15,7 @@ var setArray = {};
 //handle player input
 function handler()
 {
+    document.getElementById("setSelector").innerHTML = "";
     document.getElementById('legalities').innerHTML = ' ';
     divel.innerHTML = '';
     var entCard = document.getElementById("EnteredCard").value;
@@ -23,18 +24,19 @@ function handler()
     var setSearch = MakeRequest(parsedJson.prints_search_uri);
     parsedSetJson = JSON.parse(setSearch);
     //console.log(parsedSetJson.data[0]);
-    var counter = 0
-    for(counter = 0;counter < parsedSetJson.total_cards;counter++)
+    for(var counter = 0;counter < parsedSetJson.total_cards;counter++)
     {
         setArray[counter] = parsedSetJson.data[counter];
     }
-    var setCounter = 0;
-    /*
-    for(setCounter = 0;setCounter<parsedSetJson.total_cards;setCounter++)
+    select = document.getElementById("setSelector");
+
+    for(var setCounter = 0;setCounter<parsedSetJson.total_cards;setCounter++)
     {
-        console.log(setArray[setCounter].set_name);
+        var option = document.createElement('option');
+        option.innerHTML = setArray[setCounter].set_name;
+        option.value = setArray[setCounter].set_name;
+        select.appendChild(option);
     }
-    */
     if(parsedJson.status == 404)
     {
         alert('ALERT: Can not parse your request, please enter it again');
@@ -49,15 +51,17 @@ function handler()
         document.getElementById("flipButton").style.visibility="hidden";
         var pictureURL = parsedJson.image_uris.normal
         document.getElementById("cardPic").src = pictureURL;
-        document.getElementById("cardInfo").innerHTML =  cardName;
+        document.getElementById("cardName").innerHTML =  cardName;
+        document.getElementById("cardSet").innerHTML = parsedJson.set_name;
     }
     if(parsedJson.layout == 'transform')
     {
         cardFace1 = parsedJson.card_faces[0].image_uris.normal;
         cardFace2 = parsedJson.card_faces[1].image_uris.normal;
-        document.getElementById("cardInfo").innerHTML = cardName;
+        document.getElementById("cardName").innerHTML = cardName;
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("flipButton").style.visibility = "visible";
+        document.getElementById("cardSet").innerHTML = parsedJson.set_name;
 
     }
 }
@@ -91,6 +95,8 @@ function flipArt(){
 }
 
 function selectArt(){
-    console.log(setArray[2].image_uris.normal);
-    document.getElementById("cardPic").src = setArray[2].image_uris.normal;
+    var selector = document.getElementById("setSelector");
+    var selectedSet = selector.selectedIndex;
+    document.getElementById("cardPic").src = setArray[selectedSet].image_uris.normal;
+    document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name;
 }
