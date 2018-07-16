@@ -52,7 +52,7 @@ function handler()
         var pictureURL = parsedJson.image_uris.normal
         document.getElementById("cardPic").src = pictureURL;
         document.getElementById("cardName").innerHTML =  cardName;
-        document.getElementById("cardSet").innerHTML = parsedJson.set_name;
+        document.getElementById("cardSet").innerHTML = parsedJson.set_name + " : " + parsedJson.rarity[0].toUpperCase()+ parsedJson.rarity.slice(1);
     }
     if(parsedJson.layout == 'transform')
     {
@@ -61,7 +61,7 @@ function handler()
         document.getElementById("cardName").innerHTML = cardName;
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("flipButton").style.visibility = "visible";
-        document.getElementById("cardSet").innerHTML = parsedJson.set_name;
+        document.getElementById("cardSet").innerHTML = parsedJson.set_name + " : " + parsedJson.rarity[0].toUpperCase()+ parsedJson.rarity.slice(1);
 
     }
 }
@@ -97,6 +97,18 @@ function flipArt(){
 function selectArt(){
     var selector = document.getElementById("setSelector");
     var selectedSet = selector.selectedIndex;
+    console.log(setArray[selectedSet]);
+    if(setArray[selectedSet].layout == 'transform')
+    {
+        cardFace1 = setArray[selectedSet].card_faces[0].image_uris.normal;
+        cardFace2 = setArray[selectedSet].card_faces[1].image_uris.normal;
+        document.getElementById("cardPic").src = cardFace1;
+    }
+
+    else{
+    var selector = document.getElementById("setSelector");
+    var selectedSet = selector.selectedIndex;
     document.getElementById("cardPic").src = setArray[selectedSet].image_uris.normal;
-    document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name;
+    document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
+    }
 }
