@@ -125,7 +125,7 @@ function selectArt(){
     var selectedSet = selector.selectedIndex;
     console.log(setArray[selectedSet]);
     document.getElementById("price").innerHTML =  'Current price : $' + setArray[selectedSet].usd;
-    EbayLink = setArray[selectedSet].purchase_uris.Ebay;
+    EbayLink = setArray[selectedSet].purchase_uris.ebay;
     TcgPlayerLink = setArray[selectedSet].purchase_uris.tcgplayer;
     if(setArray[selectedSet].layout == 'transform')
     {
