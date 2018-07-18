@@ -19,6 +19,11 @@ var TcgPlayerLink;
 //handle player input
 function handler()
 {
+    if(document.getElementById("EnteredCard").value == '')
+    {
+        alert('Please enter a card');
+        return;
+    }
     document.getElementById('EdhRec').style.visibility = 'visible';
     document.getElementById("setSelector").innerHTML = "";
     document.getElementById('legalities').innerHTML = ' ';
@@ -124,7 +129,7 @@ function flipArt(){
 function selectArt(){
     var selector = document.getElementById("setSelector");
     var selectedSet = selector.selectedIndex;
-    console.log(setArray[selectedSet]);
+
     document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].usd;
     EbayLink = setArray[selectedSet].purchase_uris.ebay;
     TcgPlayerLink = setArray[selectedSet].purchase_uris.tcgplayer;
