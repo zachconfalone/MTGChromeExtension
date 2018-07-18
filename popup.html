@@ -32,6 +32,11 @@
         right: 4%;
         text-align: center;
     }
+    #buySelector,#buySelectorButton
+    {
+        visibility: hidden;
+    }
+
 </style>
 <head>
     <meta charset="UTF-8">
@@ -44,12 +49,16 @@
     <button id = "mybutton">Search for Card</button>
     <button id = "moreInfo">Click for more card info</button>
     <button id = "flipButton">Click to flip art</button>
+    <button id = "EdhRec">Click to go to EDHRec for this card</button>
     <select id = "setSelector"></select>
     <img id = "cardPic" style="width:300px;height:375px;"/>
     <div>
         <h3 id = cardName></h3>
         <p id = cardSet></p>
         <p id = legalities></p>
+        <p id = price></p>
+        <select id = "buySelector"></select>
+        <button id = "buySelectorButton">Click to go to site</button>
     </div>
 <script 
     src="popup.js">

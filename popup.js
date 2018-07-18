@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
     document.getElementById("flipButton").addEventListener("click",flipArt);
     document.getElementById("setSelector").addEventListener("change",selectArt);
+    document.getElementById("EdhRec").addEventListener("click",gotoEDHRec);
+    document.getElementById("buySelectorButton").addEventListener("click",gotoLink);
 });
 
 var parsedJson;
@@ -11,6 +13,8 @@ var divel = document.getElementById('cardPic');
 var cardFace1;
 var cardFace2;
 var setArray = {};
+var EbayLink;
+var TcgPlayerLink;
 
 //handle player input
 function handler()
@@ -42,10 +46,25 @@ function handler()
         alert('ALERT: Can not parse your request, please enter it again');
     }
     var cardName = parsedJson.name;
+    var buySelector = document.getElementById('buySelector');
+    buySelector.style.visibility='visible';
+    var buySelectorButton = document.getElementById('buySelectorButton');
+    buySelectorButton.style.visibility = 'visible';
+    var Ebay = document.createElement('option');
+    Ebay.value = 'Ebay';
+    Ebay.innerHTML = 'Ebay';
+    var TcgPlayer = document.createElement('option');
+    TcgPlayer.value = 'TcgPlayer';
+    TcgPlayer.innerHTML = 'TcgPlayer';
+    buySelector.appendChild(Ebay);
+    buySelector.appendChild(TcgPlayer);
+    EbayLink = parsedJson.purchase_uris.ebay;
+    TcgPlayerLink = parsedJson.purchase_uris.tcgplayer;
     for(each in parsedJson.legalities)
     {
         document.getElementById('legalities').textContent += each + ":" +parsedJson.legalities[each] + ' ' ;
     }
+    document.getElementById("price").innerHTML =  'Current price : $' + parsedJson.usd;
     if(parsedJson.layout == 'normal')
     {
         document.getElementById("flipButton").style.visibility="hidden";
@@ -69,6 +88,13 @@ function handler()
 function moreInfoinit()
 {
     var moreInfoURL = parsedJson.scryfall_uri;
+    var win = window.open(moreInfoURL, '_blank');
+    win.focus();
+}
+
+function gotoEDHRec()
+{
+    var moreInfoURL = parsedJson.related_uris.edhrec;
     var win = window.open(moreInfoURL, '_blank');
     win.focus();
 }
@@ -98,11 +124,15 @@ function selectArt(){
     var selector = document.getElementById("setSelector");
     var selectedSet = selector.selectedIndex;
     console.log(setArray[selectedSet]);
+    document.getElementById("price").innerHTML =  'Current price : $' + setArray[selectedSet].usd;
+    EbayLink = setArray[selectedSet].purchase_uris.Ebay;
+    TcgPlayerLink = setArray[selectedSet].purchase_uris.tcgplayer;
     if(setArray[selectedSet].layout == 'transform')
     {
         cardFace1 = setArray[selectedSet].card_faces[0].image_uris.normal;
         cardFace2 = setArray[selectedSet].card_faces[1].image_uris.normal;
         document.getElementById("cardPic").src = cardFace1;
+        document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
     }
 
     else{
@@ -110,5 +140,23 @@ function selectArt(){
     var selectedSet = selector.selectedIndex;
     document.getElementById("cardPic").src = setArray[selectedSet].image_uris.normal;
     document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
+    document.getElementById("cardSet").innerHTML = setArray[selectedSet].set_name + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
     }
+}
+
+function gotoLink()
+{
+    var selectorBuy = document.getElementById('buySelector');
+    var desiredSite = selectorBuy.value;
+    if(desiredSite == 'Ebay')
+    {
+        var win = window.open(EbayLink, '_blank');
+        win.focus();
+    }
+    else
+    {
+        var win = window.open(TcgPlayerLink, '_blank');
+        win.focus();
+    }
+    
 }
