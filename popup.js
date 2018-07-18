@@ -19,6 +19,7 @@ var TcgPlayerLink;
 //handle player input
 function handler()
 {
+    document.getElementById('EdhRec').style.visibility = 'visible';
     document.getElementById("setSelector").innerHTML = "";
     document.getElementById('legalities').innerHTML = ' ';
     divel.innerHTML = '';
@@ -62,39 +63,39 @@ function handler()
     TcgPlayerLink = parsedJson.purchase_uris.tcgplayer;
     for(each in parsedJson.legalities)
     {
-        document.getElementById('legalities').innerHTML +='<b>' + each + '</b>' + ": " +parsedJson.legalities[each] +  "<br />" ;
+        document.getElementById('legalities').innerHTML +='<b>' + each + '</b>' + ": " +setArray[0].legalities[each] +  "<br />" ;
     }
-    document.getElementById("price").innerHTML ='<b>'+'Current price' +'</b>'+ ' : $' + parsedJson.usd;
-    if(parsedJson.layout == 'normal')
+    document.getElementById("price").innerHTML ='<b>'+'Current price' +'</b>'+ ' : $' + setArray[0].usd;
+    if(setArray[0].layout == 'normal')
     {
         document.getElementById("flipButton").style.visibility="hidden";
-        var pictureURL = parsedJson.image_uris.normal
+        var pictureURL = setArray[0].image_uris.normal;
         document.getElementById("cardPic").src = pictureURL;
         document.getElementById("cardName").innerHTML =  cardName;
-        document.getElementById("cardSet").innerHTML ='<b>' + parsedJson.set_name + '</b>' + " : " + parsedJson.rarity[0].toUpperCase()+ parsedJson.rarity.slice(1);
+        document.getElementById("cardSet").innerHTML ='<b>' +setArray[0].set_name + '</b>' + " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
     }
-    if(parsedJson.layout == 'transform')
+    if(setArray[0].layout == 'transform')
     {
-        cardFace1 = parsedJson.card_faces[0].image_uris.normal;
-        cardFace2 = parsedJson.card_faces[1].image_uris.normal;
+        cardFace1 = setArray[0].card_faces[0].image_uris.normal;
+        cardFace2 = setArray[0].card_faces[1].image_uris.normal;
         document.getElementById("cardName").innerHTML = cardName;
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("flipButton").style.visibility = "visible";
-        document.getElementById("cardSet").innerHTML = + '<b>' + parsedJson.set_name +'</b>'+ " : " + parsedJson.rarity[0].toUpperCase()+ parsedJson.rarity.slice(1);
+        document.getElementById("cardSet").innerHTML = + '<b>' +setArray[0].set_name +'</b>'+ " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
 
     }
 }
 
 function moreInfoinit()
 {
-    var moreInfoURL = parsedJson.scryfall_uri;
+    var moreInfoURL =setArray[0].scryfall_uri;
     var win = window.open(moreInfoURL, '_blank');
     win.focus();
 }
 
 function gotoEDHRec()
 {
-    var moreInfoURL = parsedJson.related_uris.edhrec;
+    var moreInfoURL = setArray[0].related_uris.edhrec;
     var win = window.open(moreInfoURL, '_blank');
     win.focus();
 }
