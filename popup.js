@@ -62,7 +62,7 @@ function handler()
     TcgPlayerLink = parsedJson.purchase_uris.tcgplayer;
     for(each in parsedJson.legalities)
     {
-        document.getElementById('legalities').textContent += each + ":" +parsedJson.legalities[each] + ' ' ;
+        document.getElementById('legalities').innerHTML += each + ": " +parsedJson.legalities[each] +  "<br />" ;
     }
     document.getElementById("price").innerHTML =  'Current price : $' + parsedJson.usd;
     if(parsedJson.layout == 'normal')
