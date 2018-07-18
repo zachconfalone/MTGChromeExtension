@@ -1,7 +1,7 @@
 {
-    "name": "MTGExtenstion",
+    "name": "MTG Card Fetcher",
     "version": "1.0",
-    "description": "Will fetch Card image and text and legality",
+    "description": "Will fetch Various information for Magic cards",
     "manifest_version": 2,
     "browser_action": {
       "default_icon": "icon.png",
