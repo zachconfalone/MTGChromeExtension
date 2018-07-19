@@ -24,11 +24,6 @@ function handler()
         alert('Please enter a card');
         return;
     }
-    if(parsedJson.status == 404)
-    {
-        alert('ALERT: Can not parse your request, please enter it again');
-        return;
-    }
     document.getElementById('EdhRec').style.visibility = 'visible';
     document.getElementById("setSelector").innerHTML = "";
     document.getElementById('legalities').innerHTML = ' ';
@@ -38,6 +33,11 @@ function handler()
     parsedJson = JSON.parse(returned);
     var setSearch = MakeRequest(parsedJson.prints_search_uri);
     parsedSetJson = JSON.parse(setSearch);
+    if(parsedJson.status == 404)
+    {
+        alert('ALERT: Can not parse your request, please enter it again');
+        return;
+    }
     //console.log(parsedSetJson.data[0]);
     for(var counter = 0;counter < parsedSetJson.total_cards;counter++)
     {
@@ -91,7 +91,7 @@ function handler()
         document.getElementById("cardName").innerHTML = cardName;
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("flipButton").style.visibility = "visible";
-        document.getElementById("cardSet").innerHTML = + '<b>' +setArray[0].set_name +'</b>'+ " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
+        document.getElementById("cardSet").innerHTML ='<b>' +setArray[0].set_name +'</b>'+ " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
 
     }
 }
