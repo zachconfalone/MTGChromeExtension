@@ -24,6 +24,11 @@ function handler()
         alert('Please enter a card');
         return;
     }
+    if(parsedJson.status == 404)
+    {
+        alert('ALERT: Can not parse your request, please enter it again');
+        return;
+    }
     document.getElementById('EdhRec').style.visibility = 'visible';
     document.getElementById("setSelector").innerHTML = "";
     document.getElementById('legalities').innerHTML = ' ';
