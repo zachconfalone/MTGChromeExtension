@@ -16,6 +16,15 @@ var setArray = {};
 var EbayLink;
 var TcgPlayerLink;
 
+var input = document.getElementById("EnteredCard");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        document.getElementById("mybutton").click();
+    }
+});
+
+
+
 //handle player input
 function handler()
 {

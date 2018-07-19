@@ -46,6 +46,10 @@
         top: 90%;
         right: 14%;
     }
+    #mybutton
+    {
+        visibility: hidden; 
+    }
 
 </style>
 <head>
@@ -56,10 +60,10 @@
 </head>
 <body>
     Enter Card:  <input type="text" name="Card" id = "EnteredCard">
-    <button id = "mybutton">Search for Card</button>
+    <button id = "mybutton"></button>
+    <select id = "setSelector"></select>
     <button id = "moreInfo">Click for more card info</button>
     <button id = "flipButton">Click to flip art</button>
-    <select id = "setSelector"></select>
     <img id = "cardPic" style="width:300px;height:375px;"/>
     <div>
         <h3 id = cardName></h3>
