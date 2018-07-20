@@ -2,7 +2,7 @@
 <html lang="en">
 <style>
     body{
-        height: 450px;
+        height: 550px;
         width: 700px;
         text-align: center;
         display: table;
@@ -19,12 +19,12 @@
         position:absolute;
         transition: .5s ease;
         visibility:hidden;
-        top: 95%;
+        top: 90%;
         left: 18%;
     }
     div{
         background-color: lightgray;
-        height: 375px;
+        height: 450px;
         width: 325px;
         position:absolute;
         transition: .5s ease;
@@ -36,15 +36,9 @@
     {
         visibility: hidden;
     }
-
     #EdhRec
     {
         visibility: hidden;
-        position:absolute;
-        transition: .5s ease;
-        visibility:hidden;
-        top: 90%;
-        right: 14%;
     }
     #mybutton
     {
@@ -59,15 +53,17 @@
     <title>Document</title>
 </head>
 <body>
-    Enter Card:  <input type="text" name="Card" id = "EnteredCard">
+    Enter Card:  <input type="text" name="Card" id = "EnteredCard" list = 'datalist'>
+    <datalist id = 'datalist'></datalist>
     <button id = "mybutton"></button>
     <select id = "setSelector"></select>
     <button id = "moreInfo">Click for more card info</button>
     <button id = "flipButton">Click to flip art</button>
-    <img id = "cardPic" style="width:300px;height:375px;"/>
+    <img id = "cardPic" style="width:300px;height:400px;"/>
     <div>
         <h3 id = cardName></h3>
         <p id = cardSet></p>
+        <p id = oracleText></p>
         <p id = legalities></p>
         <p id = price></p>
         <select id = "buySelector"></select>

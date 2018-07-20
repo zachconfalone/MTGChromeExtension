@@ -1,5 +1,24 @@
 //set click handler
 document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById("EnteredCard").addEventListener("keyup",async function(event)
+    {
+        if(event.keyCode != 13 && event.keyCode != 32)
+        {
+            setTimeout(() => {
+                var requestedCard = document.getElementById("EnteredCard").value;
+                var url = 'https://api.scryfall.com/cards/autocomplete?q='+requestedCard;
+                var returnedSuggestion = MakeRequest(url);
+                parsedSuggestions = JSON.parse(returnedSuggestion);
+                var suggestions = '';
+                for(var i = 0; i < 11; i++)
+                {
+                    suggestions += '<option value="'+parsedSuggestions.data[i]+'" />';
+                }
+                document.getElementById('datalist').innerHTML = suggestions;
+            }, 50);
+        }
+    }
+);
     document.getElementById("mybutton").addEventListener("click",handler);
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
     document.getElementById("flipButton").addEventListener("click",flipArt);
@@ -15,15 +34,17 @@ var cardFace2;
 var setArray = {};
 var EbayLink;
 var TcgPlayerLink;
+var oracle1;
+var oracle2;
+
 
 var input = document.getElementById("EnteredCard");
 input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
+        document.getElementById("datalist").innerHTML = '';
         document.getElementById("mybutton").click();
     }
 });
-
-
 
 //handle player input
 function handler()
@@ -47,7 +68,6 @@ function handler()
         alert('ALERT: Can not parse your request, please enter it again');
         return;
     }
-    //console.log(parsedSetJson.data[0]);
     for(var counter = 0;counter < parsedSetJson.total_cards;counter++)
     {
         setArray[counter] = parsedSetJson.data[counter];
@@ -76,13 +96,13 @@ function handler()
     var TcgPlayer = document.createElement('option');
     TcgPlayer.value = 'TcgPlayer';
     TcgPlayer.innerHTML = 'TcgPlayer';
-    buySelector.appendChild(Ebay);
     buySelector.appendChild(TcgPlayer);
+    buySelector.appendChild(Ebay);
     EbayLink = parsedJson.purchase_uris.ebay;
     TcgPlayerLink = parsedJson.purchase_uris.tcgplayer;
     for(each in parsedJson.legalities)
     {
-        document.getElementById('legalities').innerHTML +='<b>' + each + '</b>' + ": " +setArray[0].legalities[each] +  "<br />" ;
+        document.getElementById('legalities').innerHTML +='<b>' + each[0].toUpperCase() + each.slice(1) + '</b>' + ": " +setArray[0].legalities[each].replace("_"," ") +  "<br />" ;
     }
     document.getElementById("price").innerHTML ='<b>'+'Current price' +'</b>'+ ' : $' + setArray[0].usd;
     if(setArray[0].layout == 'normal')
@@ -91,19 +111,24 @@ function handler()
         var pictureURL = setArray[0].image_uris.normal;
         document.getElementById("cardPic").src = pictureURL;
         document.getElementById("cardName").innerHTML =  cardName;
+        document.getElementById("oracleText").innerHTML = "<b>" + "Oracle Text: " + "</b>"+setArray[0].oracle_text;
         document.getElementById("cardSet").innerHTML ='<b>' +setArray[0].set_name + '</b>' + " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
     }
     if(setArray[0].layout == 'transform')
     {
+        oracle1 = setArray[0].card_faces[0].oracle_text
+        oracle2 = setArray[0].card_faces[1].oracle_text;
         cardFace1 = setArray[0].card_faces[0].image_uris.normal;
         cardFace2 = setArray[0].card_faces[1].image_uris.normal;
         document.getElementById("cardName").innerHTML = cardName;
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("flipButton").style.visibility = "visible";
+        document.getElementById("oracleText").innerHTML ="<b>" + "Oracle Text: " +"</b>"+ oracle1;
         document.getElementById("cardSet").innerHTML ='<b>' +setArray[0].set_name +'</b>'+ " : " + setArray[0].rarity[0].toUpperCase()+ setArray[0].rarity.slice(1);
 
     }
 }
+
 
 function moreInfoinit()
 {
@@ -133,9 +158,11 @@ function flipArt(){
     {
         case cardFace1:
             document.getElementById("cardPic").src = cardFace2;
+            document.getElementById("oracleText").innerHTML = "<b>" + "Oracle Text: " +"</b>"+ oracle2;
             return;
         case cardFace2:
             document.getElementById("cardPic").src = cardFace1;
+            document.getElementById("oracleText").innerHTML = "<b>" + "Oracle Text: " +"</b>" +oracle1;
             return;
     }
 }
@@ -179,3 +206,7 @@ function gotoLink()
     }
     
 }
+
+
+
+
