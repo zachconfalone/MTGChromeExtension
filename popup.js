@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("setSelector").addEventListener("change",selectArt);
     document.getElementById("EdhRec").addEventListener("click",gotoEDHRec);
     document.getElementById("buySelectorButton").addEventListener("click",gotoLink);
+    window.addEventListener('error', function(e) {
+        alert('Could not find that card');
+        console.log(e);
+    }, true);
 });
 
 var parsedJson;
@@ -54,20 +58,17 @@ function handler()
         alert('Please enter a card');
         return;
     }
-    document.getElementById('EdhRec').style.visibility = 'visible';
-    document.getElementById("setSelector").innerHTML = "";
-    document.getElementById('legalities').innerHTML = ' ';
-    divel.innerHTML = '';
     var entCard = document.getElementById("EnteredCard").value;
     var returned = MakeRequest('https://api.scryfall.com/cards/named?fuzzy=' + entCard)
     parsedJson = JSON.parse(returned);
     var setSearch = MakeRequest(parsedJson.prints_search_uri);
     parsedSetJson = JSON.parse(setSearch);
-    if(parsedJson.status == 404)
-    {
-        alert('ALERT: Can not parse your request, please enter it again');
-        return;
-    }
+    document.getElementById('moreInfo').style.visibility = 'visible';
+    document.getElementById('setSelector').style.visibility = 'visible';
+    document.getElementById('EdhRec').style.visibility = 'visible';
+    document.getElementById("setSelector").innerHTML = ' ';
+    document.getElementById('legalities').innerHTML = ' ';
+    divel.innerHTML = '';
     for(var counter = 0;counter < parsedSetJson.total_cards;counter++)
     {
         setArray[counter] = parsedSetJson.data[counter];

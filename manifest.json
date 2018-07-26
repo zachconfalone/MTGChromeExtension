@@ -1,6 +1,6 @@
 {
     "name": "MTG Card Fetcher",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Will fetch Various information for Magic cards",
     "manifest_version": 2,
     "browser_action": {
