@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded',function(){
                 var returnedSuggestion = MakeRequest(url);
                 parsedSuggestions = JSON.parse(returnedSuggestion);
                 var suggestions = '';
-                for(var i = 0; i < 11; i++)
+                for(var i = 0; i < 5; i++)
                 {
-                    suggestions += '<option value="'+parsedSuggestions.data[i]+'" />';
+                    suggestions += '<option value="'+parsedSuggestions.data[i]+'" />'; // Load top 5 suggestions into selector
                 }
                 document.getElementById('datalist').innerHTML = suggestions;
             }, 50);
@@ -97,6 +97,7 @@ function handler()
     var TcgPlayer = document.createElement('option');
     TcgPlayer.value = 'TcgPlayer';
     TcgPlayer.innerHTML = 'TcgPlayer';
+    buySelector.innerHTML = '';
     buySelector.appendChild(TcgPlayer);
     buySelector.appendChild(Ebay);
     EbayLink = parsedJson.purchase_uris.ebay;
