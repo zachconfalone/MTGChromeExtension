@@ -61,6 +61,13 @@ function handler()
     var entCard = document.getElementById("EnteredCard").value;
     var returned = MakeRequest('https://api.scryfall.com/cards/named?fuzzy=' + entCard)
     parsedJson = JSON.parse(returned);
+    if(parsedJson.reserved)
+    {
+        document.getElementById('reserved').innerHTML = "This card is on Magic's Reserved list"
+    }
+    else{
+    document.getElementById('reserved').innerHTML = "This card is not on Magic's Reserved list"
+    }
     var setSearch = MakeRequest(parsedJson.prints_search_uri);
     parsedSetJson = JSON.parse(setSearch);
     document.getElementById('moreInfo').style.visibility = 'visible';
