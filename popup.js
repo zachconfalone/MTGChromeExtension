@@ -113,7 +113,14 @@ function handler()
     {
         document.getElementById('legalities').innerHTML +='<b>' + each[0].toUpperCase() + each.slice(1) + '</b>' + ": " +setArray[0].legalities[each].replace("_"," ") +  "<br />" ;
     }
-    document.getElementById("price").innerHTML ='<b>'+'Current price' +'</b>'+ ' : $' + setArray[0].usd;
+    if(setArray[0].prices.usd == null)
+    {
+        console.log('price is undefined');
+        document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
+    }
+    else{
+    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd;
+    }
     if(setArray[0].layout == 'transform')
     {
         oracle1 = setArray[0].card_faces[0].oracle_text
@@ -184,13 +191,13 @@ function flipArt(){
 function selectArt(){
     var selector = document.getElementById("setSelector");
     var selectedSet = selector.selectedIndex;
-    if(setArray[selectedSet].usd == undefined)
+    if(setArray[selectedSet].prices.usd == null)
     {
         console.log('price is undefined');
         document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
     }
     else{
-    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].usd;
+    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd;
     }
     EbayLink = setArray[selectedSet].purchase_uris.ebay;
     TcgPlayerLink = setArray[selectedSet].purchase_uris.tcgplayer;
