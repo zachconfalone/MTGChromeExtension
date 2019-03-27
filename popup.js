@@ -119,7 +119,7 @@ function handler()
         document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
     }
     else{
-    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd;
+    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[0].prices.usd;
     }
     if(setArray[0].layout == 'transform')
     {
