@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded',function(){
     document.getElementById("moreInfo").addEventListener("click",moreInfoinit);
     document.getElementById("flipButton").addEventListener("click",flipArt);
     document.getElementById("setSelector").addEventListener("change",selectArt);
-    document.getElementById("EdhRec").addEventListener("click",gotoEDHRec);
     document.getElementById("buySelectorButton").addEventListener("click",gotoLink);
     window.addEventListener('error', function(e) {
         alert('Could not find that card');
@@ -36,8 +35,9 @@ var divel = document.getElementById('cardPic');
 var cardFace1;
 var cardFace2;
 var setArray = {};
-var EbayLink;
 var TcgPlayerLink;
+var edh_link;
+var gatherer_link;
 var oracle1;
 var oracle2;
 
@@ -72,7 +72,6 @@ function handler()
     parsedSetJson = JSON.parse(setSearch);
     document.getElementById('moreInfo').style.visibility = 'visible';
     document.getElementById('setSelector').style.visibility = 'visible';
-    document.getElementById('EdhRec').style.visibility = 'visible';
     document.getElementById("setSelector").innerHTML = ' ';
     document.getElementById('legalities').innerHTML = ' ';
     divel.innerHTML = '';
@@ -98,28 +97,49 @@ function handler()
     buySelector.style.visibility='visible';
     var buySelectorButton = document.getElementById('buySelectorButton');
     buySelectorButton.style.visibility = 'visible';
-    var Ebay = document.createElement('option');
-    Ebay.value = 'Ebay';
-    Ebay.innerHTML = 'Ebay';
     var TcgPlayer = document.createElement('option');
     TcgPlayer.value = 'TcgPlayer';
     TcgPlayer.innerHTML = 'TcgPlayer';
+    var Gatherer = document.createElement('option');
+    Gatherer.value = 'Gatherer';
+    Gatherer.innerHTML = 'Gatherer';
+    var EdhRec = document.createElement('option');
+    EdhRec.value = 'EdhRec';
+    EdhRec.innerHTML = 'EdhRec';
     buySelector.innerHTML = '';
     buySelector.appendChild(TcgPlayer);
-    buySelector.appendChild(Ebay);
-    EbayLink = parsedJson.purchase_uris.ebay;
+    buySelector.appendChild(Gatherer);
+    buySelector.appendChild(EdhRec);
     TcgPlayerLink = parsedJson.purchase_uris.tcgplayer;
+    edh_link = parsedJson.related_uris.edhrec;
+    gatherer_link = parsedJson.related_uris.gatherer;
     for(each in parsedJson.legalities)
     {
         document.getElementById('legalities').innerHTML +='<b>' + each[0].toUpperCase() + each.slice(1) + '</b>' + ": " +setArray[0].legalities[each].replace("_"," ") +  "<br />" ;
     }
-    if(setArray[0].prices.usd == null)
+    if(!setArray[0].prices.usd)
     {
-        console.log('price is undefined');
-        document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
+        if(setArray[0].prices.usd_foil)
+        {
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price(Foil Only) : $'+'</b>' + setArray[0].prices.usd_foil;
+        }
+        else if(setArray[0].prices.tix)
+        {
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price(Online Only) : Tix'+'</b>' + setArray[0].prices.tix;
+        }
+        else
+        {
+            console.log('price is undefined');
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
+        }
     }
-    else{
-    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[0].prices.usd;
+    else if(setArray[0].prices.usd && !setArray[0].prices.usd_foil)
+    {
+        document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[0].prices.usd + '<b>  Not Available in Foil' + '</b>';
+    }
+    else
+    {
+        document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[0].prices.usd + '<b> Foil : $' + '</b>' + setArray[0].prices.usd_foil;
     }
     if(setArray[0].layout == 'transform')
     {
@@ -158,14 +178,6 @@ function moreInfoinit()
     win.focus();
 }
 
-function gotoEDHRec()
-{
-    var moreInfoURL = setArray[0].related_uris.edhrec;
-    var win = window.open(moreInfoURL, '_blank');
-    win.focus();
-}
-
-
 function MakeRequest(Url)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -191,16 +203,33 @@ function flipArt(){
 function selectArt(){
     var selector = document.getElementById("setSelector");
     var selectedSet = selector.selectedIndex;
-    if(setArray[selectedSet].prices.usd == null)
+    if(setArray[selectedSet].prices.usd == null )
     {
-        console.log('price is undefined');
-        document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
+        if(setArray[selectedSet].prices.usd_foil)
+        {
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price (Foil Only) : $'+'</b>' + setArray[selectedSet].prices.usd_foil;
+        }
+        else if(setArray[selectedSet].prices.tix)
+        {
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price (Online Only) : Tix:'+'</b>' + setArray[selectedSet].prices.tix;
+        }
+        else
+        {
+            console.log('price is undefined');
+            document.getElementById("price").innerHTML = '<b>'+ 'Current price : '+'</b>' + 'Could not fetch current price';
+        }
     }
-    else{
-    document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd;
+    else if(setArray[selectedSet].prices.usd && !setArray[selectedSet].prices.usd_foil)
+    {
+        document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd + '<b>  Not Available in Foil' + '</b>';
     }
-    EbayLink = setArray[selectedSet].purchase_uris.ebay;
+    else
+    {
+        document.getElementById("price").innerHTML = '<b>'+ 'Current price : $'+'</b>' + setArray[selectedSet].prices.usd + '<b> Foil : $' + '</b>' + setArray[selectedSet].prices.usd_foil;
+    }
     TcgPlayerLink = setArray[selectedSet].purchase_uris.tcgplayer;
+    gatherer_link = setArray[selectedSet].related_uris.gatherer;
+    edh_link = setArray[selectedSet].related_uris.edhrec;
     if(setArray[selectedSet].layout == 'transform')
     {
         cardFace1 = setArray[selectedSet].card_faces[0].image_uris.normal;
@@ -208,12 +237,12 @@ function selectArt(){
         document.getElementById("cardPic").src = cardFace1;
         document.getElementById("cardSet").innerHTML = '<b>' + setArray[selectedSet].set_name +'</b>' + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
     }
-
-    else{
-    var selector = document.getElementById("setSelector");
-    var selectedSet = selector.selectedIndex;
-    document.getElementById("cardPic").src = setArray[selectedSet].image_uris.normal;
-    document.getElementById("cardSet").innerHTML = '<b>' + setArray[selectedSet].set_name +'</b>' + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
+    else
+    {
+        var selector = document.getElementById("setSelector");
+        var selectedSet = selector.selectedIndex;
+        document.getElementById("cardPic").src = setArray[selectedSet].image_uris.normal;
+        document.getElementById("cardSet").innerHTML = '<b>' + setArray[selectedSet].set_name +'</b>' + " : " + setArray[selectedSet].rarity[0].toUpperCase()+ setArray[selectedSet].rarity.slice(1);
     }
 }
 
@@ -221,17 +250,19 @@ function gotoLink()
 {
     var selectorBuy = document.getElementById('buySelector');
     var desiredSite = selectorBuy.value;
-    if(desiredSite == 'Ebay')
+    if(desiredSite == "TcgPlayer")
     {
-        var win = window.open(EbayLink, '_blank');
-        win.focus();
+        var win = window.open(TcgPlayerLink, '_blank');
+    }
+    else if(desiredSite == "Gatherer")
+    {
+        var win = window.open(gatherer_link, '_blank');
     }
     else
     {
-        var win = window.open(TcgPlayerLink, '_blank');
-        win.focus();
+        var win = window.open(edh_link, '_blank');
     }
-    
+    win.focus();
 }
 
 

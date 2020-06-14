@@ -33,7 +33,7 @@
         right: 4%;
         text-align: center;
     }
-    #buySelector,#buySelectorButton,#EdhRec,#moreInfo,#setSelector
+    #buySelector,#buySelectorButton,#moreInfo,#setSelector
     {
         visibility: hidden;
     }
@@ -46,11 +46,11 @@
     <title>Document</title>
 </head>
 <body>
-    Enter Card:  <input type="text" name="Card" id = "EnteredCard" list = 'datalist'>
+    Enter Card:  <input type="text" name="Card" id = "EnteredCard" list = 'datalist' autofocus>
     <datalist id = 'datalist'></datalist>
     <button id = "mybutton">Click to Search</button>
     <select id = "setSelector"></select>
-    <button id = "moreInfo">Click for more card info</button>
+    <button id = "moreInfo">Click to go to Scryfall</button>
     <button id = "flipButton">Click to flip art</button>
     <img id = "cardPic" style="width:300px;height:400px;"/>
     <div>
@@ -62,7 +62,6 @@
         <p id = price></p>
         <select id = "buySelector"></select>
         <button id = "buySelectorButton">Click to go to selected site</button>
-        <button id = "EdhRec">Click to go to EDHRec for this card</button>
     </div>
 <script 
     src="popup.js">
